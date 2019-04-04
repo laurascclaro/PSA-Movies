@@ -9,13 +9,11 @@ namespace _ExercicioEFCoreCodeFirst.PL
         public int ActorMovieID { get; set; }
         public string Character { get; set; }
 
-        public int ID { get; set; }//id do movie
+        public int MovieId { get; set; }//id do movie
         public Movie Movie { get; set; }
 
-        public int ActorID{ get; set; }
+        public int ActorId{ get; set; }
         public Actor Actor { get; set; }
         
-
-
     }
 }

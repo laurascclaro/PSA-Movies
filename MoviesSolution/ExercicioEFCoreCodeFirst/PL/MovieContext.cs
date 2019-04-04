@@ -13,6 +13,8 @@ namespace _ExercicioEFCoreCodeFirst.PL
         //ConsoleLoggerProvider((_, __) => true, true) });
         public DbSet<Movie> Movies { get; set; }//colecao de objetos em memoria
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<ActorMovie> Characters { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder

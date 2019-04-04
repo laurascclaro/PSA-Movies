@@ -6,7 +6,7 @@ namespace _ExercicioEFCoreCodeFirst.PL
 {
     class Actor
     {
-        public int ID { get; set; }
+        public int ActorId { get; set; }
         public string Name { get; set; }
         public DateTime DateBirth { get; set; }
         

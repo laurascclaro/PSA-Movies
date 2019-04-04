@@ -20,145 +20,189 @@ namespace _ExercicioEFCoreCodeFirst
                 }
                 #endregion
 
-
-
                 #region consultas
-                Console.WriteLine();
-                Console.WriteLine("Todos os gêneros da base de dados (press any key...):");
-                Console.ReadKey();
-                foreach (Genre genero in db.Genres)
-                {
-                    Console.WriteLine("{0} \t {1}", genero.GenreID, genero.Name);
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os gêneros da base de dados (press any key...):");
+                //Console.ReadKey();
+                //foreach (Genre genero in db.Genres)
+                //{
+                //    Console.WriteLine("{0} \t {1}", genero.GenreID, genero.Name);
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Todos os filmes do genero 'Action' (query syntax) (press any key...):");
-                Console.ReadKey();
-                var filmesAction2 = from m in db.Movies//pra cada filme na tabela (colecao de movies) cada filme = m
-                                    where m.Genre.Name == "Action" //pegar propriedade genero e ver se eh Action
-                                    select m;//"pega"
-                foreach (Movie filme in filmesAction2)//usa a variavel que armazenou as infos nos o banco de dados
-                {
-                    Console.WriteLine("\t{0}", filme.Title);//escreve nome do filme selecionado (todos que forem de action)
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os filmes do genero 'Action' (query syntax) (press any key...):");
+                //Console.ReadKey();
+                //var filmesAction2 = from m in db.Movies//pra cada filme na tabela (colecao de movies) cada filme = m
+                //                    where m.Genre.Name == "Action" //pegar propriedade genero e ver se eh Action
+                //                    select m;//"pega"
+                //foreach (Movie filme in filmesAction2)//usa a variavel que armazenou as infos nos o banco de dados
+                //{
+                //    Console.WriteLine("\t{0}", filme.Title);//escreve nome do filme selecionado (todos que forem de action)
+                //}
 
 
 
-                Console.WriteLine();
-                Console.WriteLine("Todos os filmes do genero 'Action' (method syntax) (press any key...):");
-                Console.ReadKey();
-                var filmesAction = db.Movies.Where(m => m.GenreID == 1);
-                foreach (Movie filme in filmesAction)
-                {
-                    Console.WriteLine("\t{0}", filme.Title);
-                }
-                Console.WriteLine();
-                Console.WriteLine("Todos os filmes de cada genero (press any key...):");
-                Console.ReadKey();
-                var generosFilmes = from g in db.Genres.Include(gen => gen.Movies)// "eager loading" --> forca que traga todos os dados do banco pra memoria (lista de genero e INCLUI filmes)
-                                    select g;
-                var generosFilmes2 = db.Genres.Include(gen => gen.Movies).ToList();
-                foreach (var gf in generosFilmes2)
-                {
-                    Console.WriteLine("Filmes do genero: " + gf.Name);
-                    foreach (var f in gf.Movies)
-                    {
-                        Console.WriteLine("\t{0}", f.Title);
-                    }
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os filmes do genero 'Action' (method syntax) (press any key...):");
+                //Console.ReadKey();
+                //var filmesAction = db.Movies.Where(m => m.GenreID == 1);
+                //foreach (Movie filme in filmesAction)
+                //{
+                //    Console.WriteLine("\t{0}", filme.Title);
+                //}
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os filmes de cada genero (press any key...):");
+                //Console.ReadKey();
+                //var generosFilmes = from g in db.Genres.Include(gen => gen.Movies)// "eager loading" --> forca que traga todos os dados do banco pra memoria (lista de genero e INCLUI filmes)
+                //                    select g;
+                //var generosFilmes2 = db.Genres.Include(gen => gen.Movies).ToList();
+                //foreach (var gf in generosFilmes2)
+                //{
+                //    Console.WriteLine("Filmes do genero: " + gf.Name);
+                //    foreach (var f in gf.Movies)
+                //    {
+                //        Console.WriteLine("\t{0}", f.Title);
+                //    }
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Nomes dos filmes do diretor Quentin Tarantino (press any key...):");
-                Console.ReadKey();
-                var q1 = from f in db.Movies
-                         where f.Director == "Quentin Tarantino"
-                         select f.Title;//PROJECAO SOBRE COLUNA ---> retorna uma lista de string
-                var q2 = db.Movies.Where(f => f.Director == "Quentin Tarantino").Select(f => f.Title);
-                foreach (String t in q1)
-                {
-                    Console.WriteLine(t);
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Nomes dos filmes do diretor Quentin Tarantino (press any key...):");
+                //Console.ReadKey();
+                //var q1 = from f in db.Movies
+                //         where f.Director == "Quentin Tarantino"
+                //         select f.Title;//PROJECAO SOBRE COLUNA ---> retorna uma lista de string
+                //var q2 = db.Movies.Where(f => f.Director == "Quentin Tarantino").Select(f => f.Title);
+                //foreach (String t in q1)
+                //{
+                //    Console.WriteLine(t);
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Nomes e data dos filmes do diretor Quentin Tarantino (press any key...):");
-                Console.ReadKey(); Console.ReadKey();
-                var q3 = from f in db.Movies
-                         where f.Director == "Quentin Tarantino"
-                         select new { f.Title, f.ReleaseDate }; //resulta em uma colecao e guarda na variavel q3 sem tipo (anonima), e cria objetos de classe anonima.
-                foreach (var f in q3)
-                {
-                    Console.WriteLine("{0}\t {1}", f.ReleaseDate.ToShortDateString(), f.Title);
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Nomes e data dos filmes do diretor Quentin Tarantino (press any key...):");
+                //Console.ReadKey(); Console.ReadKey();
+                //var q3 = from f in db.Movies
+                //         where f.Director == "Quentin Tarantino"
+                //         select new { f.Title, f.ReleaseDate }; //resulta em uma colecao e guarda na variavel q3 sem tipo (anonima), e cria objetos de classe anonima.
+                //foreach (var f in q3)
+                //{
+                //    Console.WriteLine("{0}\t {1}", f.ReleaseDate.ToShortDateString(), f.Title);
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Todos os gêneros ordenados pelo nome (press any key...):");
-                Console.ReadKey();
-                var q4 = db.Genres.OrderBy(g => g.Name);//ordena filmes em ordem alfabetica
-                foreach (var genero in q4)
-                {
-                    Console.WriteLine("{0}\t {1}", genero.Name, genero.Description);
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os gêneros ordenados pelo nome (press any key...):");
+                //Console.ReadKey();
+                //var q4 = db.Genres.OrderBy(g => g.Name);//ordena filmes em ordem alfabetica
+                //foreach (var genero in q4)
+                //{
+                //    Console.WriteLine("{0}\t {1}", genero.Name, genero.Description);
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Todos os filmes agrupados pelo anos de lançamento (press any key...):");
-                Console.ReadKey();
-                var q5 = from f in db.Movies
-                         group f by f.ReleaseDate.Year;//ReleaseDate.Year = chave do dicionario 
-                foreach (var ano in q5.OrderByDescending(g => g.Key))//pra cada ano ordenado, itera sobre os anos (pega cada chave do dicionario)
-                {
-                    Console.WriteLine("Ano: {0}", ano.Key);
-                    foreach (var filme in ano)//itera sobre colecao de filmes que tao dentro do ano (pega cada elemento de filme)
-                    {
-                        Console.WriteLine("\t{0:dd/MM}\t {1}", filme.ReleaseDate, filme.Title);
-                    }
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Todos os filmes agrupados pelo anos de lançamento (press any key...):");
+                //Console.ReadKey();
+                //var q5 = from f in db.Movies
+                //         group f by f.ReleaseDate.Year;//ReleaseDate.Year = chave do dicionario 
+                //foreach (var ano in q5.OrderByDescending(g => g.Key))//pra cada ano ordenado, itera sobre os anos (pega cada chave do dicionario)
+                //{
+                //    Console.WriteLine("Ano: {0}", ano.Key);
+                //    foreach (var filme in ano)//itera sobre colecao de filmes que tao dentro do ano (pega cada elemento de filme)
+                //    {
+                //        Console.WriteLine("\t{0:dd/MM}\t {1}", filme.ReleaseDate, filme.Title);
+                //    }
+                //}
 
-                Console.WriteLine();
-                Console.WriteLine("Projeção do faturamento total, quantidade de filmes e avaliação média agrupadas por gênero (press any key...):");
-                Console.ReadKey();
-                var q6 = from f in db.Movies //chama todos os filmes de f
-                         group f by f.Genre.Name into grpGen//agrupa filmes pelo nome do genero e insere objeto do tipo anonimo
-                         select new
-                         { //caracteristicas do objeto a ser inserido
-                             Categoria = grpGen.Key,
-                             Filmes = grpGen,
-                             Faturamento = grpGen.Sum(e => e.Gross),
-                             Avaliacao = grpGen.Average(e => e.Rating),
-                             Quantidade = grpGen.Count()
-                         };
-                foreach (var genero in q6)
-                {
-                    Console.WriteLine("Genero: {0}", genero.Categoria);
-                    Console.WriteLine("\tFaturamento total: {0}\n\t Avaliação média: {1}\n\tNumero de filmes: {2}",
-                                    genero.Faturamento, genero.Avaliacao, genero.Quantidade);
-                }
+                //Console.WriteLine();
+                //Console.WriteLine("Projeção do faturamento total, quantidade de filmes e avaliação média agrupadas por gênero (press any key...):");
+                //Console.ReadKey();
+                //var q6 = from f in db.Movies //chama todos os filmes de f
+                //         group f by f.Genre.Name into grpGen//agrupa filmes pelo nome do genero e insere objeto do tipo anonimo
+                //         select new
+                //         { //caracteristicas do objeto a ser inserido
+                //             Categoria = grpGen.Key,
+                //             Filmes = grpGen,
+                //             Faturamento = grpGen.Sum(e => e.Gross),
+                //             Avaliacao = grpGen.Average(e => e.Rating),
+                //             Quantidade = grpGen.Count()
+                //         };
+                //foreach (var genero in q6)
+                //{
+                //    Console.WriteLine("Genero: {0}", genero.Categoria);
+                //    Console.WriteLine("\tFaturamento total: {0}\n\t Avaliação média: {1}\n\tNumero de filmes: {2}",
+                //                    genero.Faturamento, genero.Avaliacao, genero.Quantidade);
+                //}
 
                 #endregion
 
-                #region #operações de crud
-                //Adicionar um novo filme
-                Console.WriteLine("Adicionando um novo filme");
-                db.Movies.Add(new Movie
+                #region consultas casting
+
+                Console.WriteLine();
+                Console.WriteLine("Todos os atores de Stars Wars: ");
+                Console.ReadKey();
+                //var elenco = from am in db.Characters
+                //                    where am.Movie.Title == "Star Wars" 
+                //                    select am;
+
+                //QUESTAO 1
+                var elenco = db.Characters.Include("Movie").Include("Actor").Where(m => m.Movie.Title == "Star Wars").Select(m => m);
+                foreach (ActorMovie ator in elenco)
                 {
-                    Title = "High School Musical",
-                    Director = "Kenny",
-                    Rating = 8.5,
-                    ReleaseDate = new DateTime(2017, 03, 24),
-                    GenreID = 1
-                });
-                //Remover o primeiro filme consultado
-                Console.WriteLine("Removendo um filme");
-                var todosFilmes = db.Movies.ToList();
-                db.Movies.Remove(todosFilmes[0]);
-                //Atualizar os dados de um filme
-                Console.WriteLine("Atualizando um filme");
-                Movie batman = todosFilmes.Where(f => f.Title == "The Dark Knight").FirstOrDefault();//pra cada filme que entrar no laco chama de "filme" e verifica se o titulo eh "The Dark Knight"
-                if (batman != null)
-                {
-                    batman.Title = "Batman - " + batman.Title;
+                    Console.WriteLine("\t{0}", ator.Actor.Name);//escreve nome do filme selecionado (todos que forem de action)
                 }
-                //Persistir as alterações (verifique o SQL gerado)
-                db.SaveChanges();
+
+                //QUESTAO 2
+                Console.WriteLine();
+                Console.WriteLine("Todos os atores que desemprenharam o papel de 007: ");
+                Console.ReadKey();
+
+                var role = from am in db.Characters
+                           where am.Character == "James Bond"
+                           group am by am.Actor.Name;
+               
+
+                foreach (var actor in role)
+                {
+                    Console.WriteLine("\t{0}", actor.Key);//escreve nome do filme selecionado (todos que forem de action)
+                }
+
+                //QUESTAO 3
+                Console.WriteLine();
+                Console.WriteLine("(Qual ator realizou mais filmes como o “agente 007");
+                Console.ReadKey();
+
+                var character = from am in db.Characters
+                           where am.Character == "James Bond"
+                           select am;
+
+                foreach (var actor in role)
+                {
+                    Console.WriteLine("\t{0}", actor.Key);//escreve nome do filme selecionado (todos que forem de action)
+                }
+                #endregion
+
+                #region #operações de crud
+                ////Adicionar um novo filme
+                //Console.WriteLine("Adicionando um novo filme");
+                //db.Movies.Add(new Movie
+                //{
+                //    Title = "High School Musical",
+                //    Director = "Kenny",
+                //    Rating = 8.5,
+                //    ReleaseDate = new DateTime(2017, 03, 24),
+                //    GenreID = 1
+                //});
+                ////Remover o primeiro filme consultado
+                //Console.WriteLine("Removendo um filme");
+                //var todosFilmes = db.Movies.ToList();
+                //db.Movies.Remove(todosFilmes[0]);
+                ////Atualizar os dados de um filme
+                //Console.WriteLine("Atualizando um filme");
+                //Movie batman = todosFilmes.Where(f => f.Title == "The Dark Knight").FirstOrDefault();//pra cada filme que entrar no laco chama de "filme" e verifica se o titulo eh "The Dark Knight"
+                //if (batman != null)
+                //{
+                //    batman.Title = "Batman - " + batman.Title;
+                //}
+                ////Persistir as alterações (verifique o SQL gerado)
+                //db.SaveChanges();
                 #endregion
 
                 Console.ReadKey();
@@ -249,147 +293,149 @@ namespace _ExercicioEFCoreCodeFirst
 
 
             #region #dados para teste do exercício de casting
-            //      //
-            //      // inicio casting
-            //      //
-            //      var actors = new List<Actor>            {
-            //           #region Jurassic Park
-            //          new Actor{ Name = "Jeff Goldblum", DateBirth =   DateTime.Parse("9/22/1952",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Sam Neill", DateBirth =   DateTime.Parse("9/14/1947",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Laura Dern", DateBirth =   DateTime.Parse("2/10/1967",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Richard Attenborough", DateBirth =   DateTime.Parse("8/29/1923",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Samuel L. Jackson", DateBirth =   DateTime.Parse("12/21/1948",new CultureInfo("en-US")) },
-            //         #endregion
+            //
+            // inicio casting
+            //
+            var actors = new List<Actor>            {
+                       #region Jurassic Park
+                      new Actor{ Name = "Jeff Goldblum", DateBirth =   DateTime.Parse("9/22/1952",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Sam Neill", DateBirth =   DateTime.Parse("9/14/1947",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Laura Dern", DateBirth =   DateTime.Parse("2/10/1967",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Richard Attenborough", DateBirth =   DateTime.Parse("8/29/1923",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Samuel L. Jackson", DateBirth =   DateTime.Parse("12/21/1948",new CultureInfo("en-US")) },
+                     #endregion
 
-            //          #region Star Wars
-            //          new Actor{ Name = "Mark Hamill",DateBirth =   DateTime.Parse("9/25/1951",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Carrie Fisher",DateBirth =   DateTime.Parse("10/21/1956",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Harrison Ford",DateBirth =   DateTime.Parse("7/13/1942",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "David Prowse",DateBirth =   DateTime.Parse("7/1/1935",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region Star Wars
+                      new Actor{ Name = "Mark Hamill",DateBirth =   DateTime.Parse("9/25/1951",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Carrie Fisher",DateBirth =   DateTime.Parse("10/21/1956",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Harrison Ford",DateBirth =   DateTime.Parse("7/13/1942",new CultureInfo("en-US")) },
+                      new Actor{ Name = "David Prowse",DateBirth =   DateTime.Parse("7/1/1935",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region Forrest Gump
-            //          new Actor{ Name = "Tom Hanks", DateBirth =   DateTime.Parse("7/9/1956",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Robin Wright", DateBirth =   DateTime.Parse("4/8/1966",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Gary Sinise", DateBirth =   DateTime.Parse("3/17/1955",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region Forrest Gump
+                      new Actor{ Name = "Tom Hanks", DateBirth =   DateTime.Parse("7/9/1956",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Robin Wright", DateBirth =   DateTime.Parse("4/8/1966",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Gary Sinise", DateBirth =   DateTime.Parse("3/17/1955",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region GoldenEye
-            //          new Actor{ Name = "Pierce Brosnan", DateBirth =   DateTime.Parse("5/16/1953",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Famke Janssen", DateBirth =   DateTime.Parse("9/5/1964",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Judi Dench", DateBirth =   DateTime.Parse("12/9/1934",new CultureInfo("en-US")) },
-            //         #endregion
+                      #region GoldenEye
+                      new Actor{ Name = "Pierce Brosnan", DateBirth =   DateTime.Parse("5/16/1953",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Famke Janssen", DateBirth =   DateTime.Parse("9/5/1964",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Judi Dench", DateBirth =   DateTime.Parse("12/9/1934",new CultureInfo("en-US")) },
+                     #endregion
 
-            //          #region The World Is Not Enough
-            //          new Actor{ Name = "Sophie Marceau", DateBirth =   DateTime.Parse("11/17/1966",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region The World Is Not Enough
+                      new Actor{ Name = "Sophie Marceau", DateBirth =   DateTime.Parse("11/17/1966",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region Die Another Day
-            //          new Actor{ Name = "Halle Berry", DateBirth =   DateTime.Parse("8/14/1966",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region Die Another Day
+                      new Actor{ Name = "Halle Berry", DateBirth =   DateTime.Parse("8/14/1966",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region Tomorrow Never Dies
-            //          new Actor{ Name = "Michelle Yeoh", DateBirth =   DateTime.Parse("8/6/1962",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region Tomorrow Never Dies
+                      new Actor{ Name = "Michelle Yeoh", DateBirth =   DateTime.Parse("8/6/1962",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region Skyfall
-            //          new Actor{ Name = "Daniel Craig", DateBirth =   DateTime.Parse("3/2/1968",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Javier Bardem", DateBirth =   DateTime.Parse("3/1/1969",new CultureInfo("en-US")) },
-            //          #endregion
+                      #region Skyfall
+                      new Actor{ Name = "Daniel Craig", DateBirth =   DateTime.Parse("3/2/1968",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Javier Bardem", DateBirth =   DateTime.Parse("3/1/1969",new CultureInfo("en-US")) },
+                      #endregion
 
-            //          #region Casino Royale
-            //          new Actor{ Name = "Eva Green", DateBirth =   DateTime.Parse("7/6/1980",new CultureInfo("en-US")) },
-            //          new Actor{ Name = "Mads Mikkelsen", DateBirth =   DateTime.Parse("11/22/1965",new CultureInfo("en-US")) },
-            //          #endregion
-            //      };
+                      #region Casino Royale
+                      new Actor{ Name = "Eva Green", DateBirth =   DateTime.Parse("7/6/1980",new CultureInfo("en-US")) },
+                      new Actor{ Name = "Mads Mikkelsen", DateBirth =   DateTime.Parse("11/22/1965",new CultureInfo("en-US")) },
+                      #endregion
+                  };
 
-            //      //actors.ForEach(s => context.Actors.AddOrUpdate(a => a.Name, s));
-            //      context.Actors.AddRange(actors);
-            //      context.SaveChanges();
+            //actors.ForEach(s => context.Actors.AddOrUpdate(a => a.Name, s));
+            context.Actors.AddRange(actors);
+            context.SaveChanges();
 
-            //      var actorCharacters = new List<ActorMovie>() {
+            var actorCharacters = new List<ActorMovie>() {
 
-            //       #region Jurassic Park
-            //      new ActorMovie { ActorId = actors.Single(g => g.Name == "Jeff Goldblum").ActorId,
-            //                                              Character =  "Ian Malcolm",
-            //                                              MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
-            //      new ActorMovie { ActorId = actors.Single( g => g.Name == "Sam Neill").ActorId,  Character =  "Alan Grant", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
-            //     new ActorMovie { ActorId = actors.Single( g => g.Name == "Laura Dern").ActorId,  Character =  "Ellie Sattler", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
-            //     new ActorMovie { ActorId = actors.Single( g => g.Name == "Richard Attenborough").ActorId,  Character =  "John Hammond", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
-            //     new ActorMovie { ActorId = actors.Single( g => g.Name == "Samuel L. Jackson").ActorId,  Character =  "Ray Arnold", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
-            //     #endregion
+                   #region Jurassic Park
+                  new ActorMovie { ActorId = actors.Single(g => g.Name == "Jeff Goldblum").ActorId,
+                                                          Character =  "Ian Malcolm",
+                                                          MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
+                  new ActorMovie { ActorId = actors.Single( g => g.Name == "Sam Neill").ActorId,  Character =  "Alan Grant", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
+                 new ActorMovie { ActorId = actors.Single( g => g.Name == "Laura Dern").ActorId,  Character =  "Ellie Sattler", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
+                 new ActorMovie { ActorId = actors.Single( g => g.Name == "Richard Attenborough").ActorId,  Character =  "John Hammond", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
+                 new ActorMovie { ActorId = actors.Single( g => g.Name == "Samuel L. Jackson").ActorId,  Character =  "Ray Arnold", MovieId = movies.Single(g => g.Title == "Jurassic Park").ID },
+                 #endregion
 
-            //       #region SW
-            //      new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
-            //      new ActorMovie { ActorId = actors.Single( g => g.Name == "Carrie Fisher").ActorId,  Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
-            //      new ActorMovie { ActorId = actors.Single( g => g.Name == "Harrison Ford").ActorId,  Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
-            //      new ActorMovie { ActorId = actors.Single( g => g.Name == "David Prowse").ActorId,  Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
-            //      #endregion
-
-
-            //      #region Forrest Gump
-            //      new ActorMovie { ActorId = actors.Single(g => g.Name == "Tom Hanks").ActorId, Character =  "Forrest Gump", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
-            //          new ActorMovie { ActorId = actors.Single(g => g.Name == "Robin Wright").ActorId, Character =  "Jenny Curran", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
-            //          new ActorMovie { ActorId = actors.Single(g => g.Name == "Gary Sinise").ActorId, Character =  "Lieutenant Dan Taylor", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
-            //          #endregion
+                   #region SW
+                  new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
+                  new ActorMovie { ActorId = actors.Single( g => g.Name == "Carrie Fisher").ActorId,  Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
+                  new ActorMovie { ActorId = actors.Single( g => g.Name == "Harrison Ford").ActorId,  Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
+                  new ActorMovie { ActorId = actors.Single( g => g.Name == "David Prowse").ActorId,  Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "Star Wars").ID },
+                  #endregion
 
 
-            //         #region Empire
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Carrie Fisher").ActorId, Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Harrison Ford").ActorId, Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "David Prowse").ActorId, Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
-            //         #endregion
+                  #region Forrest Gump
+                  new ActorMovie { ActorId = actors.Single(g => g.Name == "Tom Hanks").ActorId, Character =  "Forrest Gump", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
+                      new ActorMovie { ActorId = actors.Single(g => g.Name == "Robin Wright").ActorId, Character =  "Jenny Curran", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
+                      new ActorMovie { ActorId = actors.Single(g => g.Name == "Gary Sinise").ActorId, Character =  "Lieutenant Dan Taylor", MovieId = movies.Single(g => g.Title == "Forrest Gump").ID },
+                      #endregion
 
-            //         #region Jedi
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Carrie Fisher").ActorId, Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Harrison Ford").ActorId, Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "David Prowse").ActorId, Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
-            //         #endregion
 
-            //         #region GoldenEye
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Famke Janssen").ActorId, Character =  "Xenia Onatopp", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
-            //         #endregion
+                     #region Empire
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Carrie Fisher").ActorId, Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Harrison Ford").ActorId, Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "David Prowse").ActorId, Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "The Empire Strikes Back").ID },
+                     #endregion
 
-            //         #region The World Is Not Enough
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Sophie Marceau").ActorId, Character =  "Elektra King", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
-            //         #endregion
+                     #region Jedi
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Mark Hamill").ActorId, Character =  "Luke Skywalker", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Carrie Fisher").ActorId, Character =  "Leia Organa", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Harrison Ford").ActorId, Character =  "Han Solo", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "David Prowse").ActorId, Character =  "Darth Vader", MovieId = movies.Single(g => g.Title == "Return of the Jedi").ID },
+                     #endregion
 
-            //         #region Die Another Day
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Halle Berry").ActorId, Character =  "Giacinta 'Jinx' Johnson", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
-            //         #endregion
+                     #region GoldenEye
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Famke Janssen").ActorId, Character =  "Xenia Onatopp", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "GoldenEye").ID },
+                     #endregion
 
-            //         #region Tomorrow Never Dies
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Michelle Yeoh").ActorId, Character =  "Wai Lin", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
-            //          #endregion
+                     #region The World Is Not Enough
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Sophie Marceau").ActorId, Character =  "Elektra King", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "The World Is Not Enough").ID },
+                     #endregion
 
-            //         #region Skyfall
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Daniel Craig").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Javier Bardem").ActorId, Character =  "Raoul Silva", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
-            //         #endregion
+                     #region Die Another Day
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Halle Berry").ActorId, Character =  "Giacinta 'Jinx' Johnson", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Die Another Day").ID },
+                     #endregion
 
-            //           #region Casino Royale
-            //          new ActorMovie { ActorId = actors.Single(g => g.Name == "Daniel Craig").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
-            //          new ActorMovie { ActorId = actors.Single(g => g.Name == "Eva Green").ActorId, Character =  "Vesper Lynd", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
-            //         new ActorMovie { ActorId = actors.Single(g => g.Name == "Mads Mikkelsen").ActorId, Character =  "Le Chiffre", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
-            //          new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
+                     #region Tomorrow Never Dies
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Pierce Brosnan").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Michelle Yeoh").ActorId, Character =  "Wai Lin", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Tomorrow Never Dies").ID },
+                      #endregion
 
-            //          #endregion
-            //};
+                     #region Skyfall
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Daniel Craig").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Javier Bardem").ActorId, Character =  "Raoul Silva", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Skyfall").ID },
+                     #endregion
 
-            //      //actorCharacters.ForEach(s => context.Characters.AddOrUpdate(ac => new { ac.ActorId, ac.MovieId }, s));
-            //      context.Characters.AddRange(actorCharacters);
-            //      context.SaveChanges();
+                       #region Casino Royale
+                      new ActorMovie { ActorId = actors.Single(g => g.Name == "Daniel Craig").ActorId, Character =  "James Bond", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
+                      new ActorMovie { ActorId = actors.Single(g => g.Name == "Eva Green").ActorId, Character =  "Vesper Lynd", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
+                     new ActorMovie { ActorId = actors.Single(g => g.Name == "Mads Mikkelsen").ActorId, Character =  "Le Chiffre", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
+                      new ActorMovie { ActorId = actors.Single(g => g.Name == "Judi Dench").ActorId, Character =  "M", MovieId = movies.Single(g => g.Title == "Casino Royale").ID },
+
+                      #endregion
+
+
+            };
+
+            //actorCharacters.ForEach(s => context.Characters.AddOrUpdate(ac => new { ac.ActorId, ac.MovieId }, s));
+            context.Characters.AddRange(actorCharacters);
+            context.SaveChanges();
             #endregion
 
         }
